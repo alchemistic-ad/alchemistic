@@ -110,6 +110,17 @@ app_license = "mit"
 # before_app_uninstall = "alchemistic.utils.before_app_uninstall"
 # after_app_uninstall = "alchemistic.utils.after_app_uninstall"
 
+fixtures = [
+    {
+        "doctype": "Property Setter",
+        "filters": [("module", "in", ["Alchemistic Cloud ERP"])],
+    },
+    {
+        "doctype": "Address Template",
+        "filters": [("name", "in", ["Malaysia"])],
+    },
+]
+
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
@@ -132,13 +143,14 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Project": {
+        "autoname": "alchemistic.doc_events.project.autoname",
+    },
+    "Sales Invoice": {
+        "autoname": "alchemistic.doc_events.sales_invoice.autoname",
+    },
+}
 
 # Scheduled Tasks
 # ---------------
@@ -236,4 +248,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-

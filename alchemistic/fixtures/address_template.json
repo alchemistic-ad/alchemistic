@@ -1,0 +1,11 @@
+[
+ {
+  "country": "Malaysia",
+  "docstatus": 0,
+  "doctype": "Address Template",
+  "is_default": 1,
+  "modified": "2025-06-07 17:52:44.062644",
+  "name": "Malaysia",
+  "template": "{{ address_line1 }}<br>\n{% if address_line2 %}{{ address_line2 }}<br>{% endif -%}\n{% if pincode %}{{ pincode }} {% endif -%}{{ city }}{% if state %}, {{ state }}{% endif -%}<br>\n{{ country }}<br>\n<br>\n{% if email_id %}{{ _(\"Email\") }}: {{ email_id }}<br>{% endif -%}\n{% if phone %}{{ _(\"Phone\") }}: {{ phone }}<br>{% endif -%}\n{% if fax %}{{ _(\"Fax\") }}: {{ fax }}<br>{% endif -%}\n"
+ }
+]

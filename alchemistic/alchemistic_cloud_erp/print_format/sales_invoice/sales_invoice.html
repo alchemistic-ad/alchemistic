@@ -1,0 +1,260 @@
+<style>
+	/* Basic styles for the body and overall page */
+	.print-format {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #333;
+		background-color: #fff;
+		padding: 40px 60px 40px 80px;
+		position: relative;
+		box-sizing: border-box;
+	}
+
+	/* Using Flexbox for the main layout structure */
+	.invoice-body {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 40px;
+	}
+
+	.invoice-header {
+		margin-bottom: 1.5cm;
+	}
+
+	/* Left column for company details */
+	.invoice-from {
+		text-align: left;
+	}
+
+	/* Right column for billing details */
+	.invoice-to {
+		text-align: left;
+	}
+
+	/* Company name styling */
+	.company-name {
+		font-size: 20px;
+		font-weight: bold;
+		color: #007883; /* Teal color from the image */
+		margin-bottom: 5px;
+	}
+
+	/* General address/contact block styling */
+	.address-block {
+		line-height: 1.6;
+		font-size: 9pt;
+		color: #555;
+	}
+
+	/* Vertical Invoice Number */
+	.invoice-number-vertical {
+		position: absolute;
+		left: 20px; /* Positioned inside the new padding area */
+		top: 12cm; /* Adjusted top position */
+		transform: rotate(-90deg);
+		transform-origin: left top;
+		font-size: 28px;
+		/* font-weight: bold; */
+		color: #007883;
+		letter-spacing: 2px;
+		white-space: nowrap;
+	}
+
+	/* Specific styling for section headers like "BILL TO" */
+	.section-header {
+		font-weight: bold;
+		color: #007883;
+		margin-bottom: 4px;
+		padding-bottom: 4px;
+		font-size: 8pt;
+		border-bottom: 1px solid #8d8d8d;
+	}
+
+	/* Styling for the invoice date */
+	.invoice-date {
+		text-align: right;
+		margin-bottom: 20px;
+		font-size: 9pt;
+	}
+
+	/* Styling for the items table */
+	.items-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 2cm;
+		font-size: 8pt;
+	}
+
+	.items-table th,
+	.items-table td {
+		padding: 2px 12px !important;
+		border-bottom: 1px solid #eee;
+		vertical-align: middle !important;
+	}
+
+	.items-table thead {
+		background-color: #007883;
+		font-weight: bold;
+	}
+
+	.items-table thead th {
+		border-bottom: none;
+		color: #fff;
+	}
+
+	.totals-section {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	/* Thank you message */
+	.thank-you {
+		font-size: 9pt;
+		color: #555;
+	}
+
+	/* Container for the summary fields */
+	.summary {
+		width: 280px;
+	}
+
+	/* Individual summary line styling */
+	.summary td {
+		font-size: 8pt;
+		color: #333;
+		padding: 8px 8px 4px 20px !important;
+	}
+
+	/* Border for summary items */
+	.summary-item {
+		border-bottom: 1px solid #8d8d8d;
+	}
+
+	/* Balance due specific styling */
+	.balance-due td {
+		font-weight: bold;
+		font-size: 12pt;
+		padding: 12px 8px 12px 20px !important;
+		border-top: 1px solid #000;
+	}
+	.balance-due td:first-child {
+		color: #007883;
+	}
+	.balance-due td:last-child {
+		background-color: #e6f3f4;
+		color: #000;
+		border-bottom: 1px solid #000;
+	}
+
+	/* Footer section for terms and bank details */
+	.invoice-footer {
+		margin-top: 50px;
+		border-top: 2px solid #eee;
+		padding-top: 20px;
+		font-size: 8pt;
+		color: #777;
+		line-height: 1.6;
+	}
+
+	.footer-header {
+		color: #007883;
+		font-weight: bold;
+		margin-bottom: 8px;
+	}
+</style>
+<div id="header-html" class="invoice-number-vertical">
+	<span style="color: #666666">INVOICE</span> #{{doc.name}}
+</div>
+
+<header class="invoice-header">
+	<h1 class="company-name">ALCHEMISTIC CLOUD (003619428-V)</h1>
+	<div class="address-block">
+		No. 32, Jalan Besar,<br />
+		35500 Bidor, Perak<br />
+		Mr. Chin Jun Kang<br />
+		admin@alchemistic.cloud<br />
+		+60165190328
+	</div>
+</header>
+
+<main>
+	<div class="invoice-body">
+		<div class="invoice-to">
+			<div class="section-header">BILL TO</div>
+			<div class="address-block">
+				<strong style="color: #000">
+					{{doc.customer}} {{doc.get_formatted("tax_id")}}
+				</strong>
+				<br />
+				{{doc.get_formatted("address_display")}}
+			</div>
+		</div>
+		<div class="invoice-details">
+			<div class="invoice-date">
+				<strong style="color: #000">Invoice Date:</strong>
+				<!-- prettier-ignore -->
+				{{frappe.format_date(doc.posting_date, "MMM dd, YYYY")}}
+			</div>
+		</div>
+	</div>
+
+	<table class="items-table">
+		<thead>
+			<tr>
+				<th style="text-align: center">DESCRIPTION</th>
+				<th width="15%" style="text-align: center">Quantity</th>
+				<th width="20%">RATE</th>
+				<th width="20%">TOTAL</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for d in doc.items %}
+			<tr>
+				<td>{{d.get_formatted("description")}}</td>
+				<td align="center">{{d.get_formatted("qty")}}</td>
+				<td align="right">{{d.get_formatted("rate")}}</td>
+				<td align="right">{{d.get_formatted("amount")}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<div class="totals-section">
+		<div class="thank-you">Thank you for your business!</div>
+		<table class="summary">
+			<tr>
+				<td align="right"><strong>SUBTOTAL</strong></td>
+				<td align="right" class="summary-item" width="140px">
+					<!-- prettier-ignore -->
+					{{doc.get_formatted("rounded_total") if doc.rounded_total else doc.get_formatted("grand_total")}}
+				</td>
+			</tr>
+			<tr>
+				<td align="right"><strong>RECEIVED DEPOSIT</strong></td>
+				<td align="right" class="summary-item">{{doc.get_formatted("total_advance")}}</td>
+			</tr>
+			<tr>
+				<td colspan="2">&nbsp;</td>
+			</tr>
+			<tr class="balance-due">
+				<td align="right">Balance Due</td>
+				<td align="right">{{doc.get_formatted("outstanding_amount")}}</td>
+			</tr>
+		</table>
+	</div>
+</main>
+
+<footer class="invoice-footer">
+	<div class="footer-header">Terms & Instructions</div>
+	<p>
+		Please ensure the invoice number #{{doc.name}} is included in the payment reference to help
+		us reconcile the transaction promptly.
+	</p>
+	<p>All Payment shall be made via bank transfer or cheque to the following account.</p>
+	<p>
+		Name of Bank: Hong Leong Bank Berhad<br />
+		Account Holder Name: ALCHEMISTIC CLOUD<br />
+		Account Number: 05700128933
+	</p>
+</footer>
