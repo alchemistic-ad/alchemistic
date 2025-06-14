@@ -80,7 +80,7 @@
 	.items-table {
 		width: 100%;
 		border-collapse: collapse;
-		margin-bottom: 2cm;
+		margin-bottom: 32px;
 		font-size: 8pt;
 	}
 
@@ -88,7 +88,7 @@
 	.items-table td {
 		padding: 2px 12px !important;
 		border-bottom: 1px solid #eee;
-		vertical-align: middle !important;
+		vertical-align: top !important;
 	}
 
 	.items-table thead {
@@ -245,16 +245,20 @@
 	</div>
 </main>
 
-<footer class="invoice-footer">
-	<div class="footer-header">Terms & Instructions</div>
-	<p>
-		Please ensure the invoice number #{{doc.name}} is included in the payment reference to help
-		us reconcile the transaction promptly.
-	</p>
-	<p>All Payment shall be made via bank transfer or cheque to the following account.</p>
-	<p>
-		Name of Bank: Hong Leong Bank Berhad<br />
-		Account Holder Name: ALCHEMISTIC CLOUD<br />
-		Account Number: 05700128933
-	</p>
-</footer>
+<table class="invoice-footer">
+	<tr>
+		<td>
+			<div class="footer-header">Terms & Instructions</div>
+			<p>
+				Please ensure the invoice number <b>#{{doc.name}}</b> is included in the payment
+				reference to help us reconcile the transaction promptly.
+			</p>
+			<p>All Payment shall be made via bank transfer or cheque to the following account.</p>
+			<p>
+				Name of Bank: Hong Leong Bank Berhad<br />
+				Account Holder Name: ALCHEMISTIC CLOUD<br />
+				Account Number: 05700128933
+			</p>
+		</td>
+	</tr>
+</table>
