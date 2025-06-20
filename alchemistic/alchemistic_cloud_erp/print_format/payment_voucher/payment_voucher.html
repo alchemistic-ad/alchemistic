@@ -1,0 +1,202 @@
+<style>
+	.print-format {
+		background-color: #fff;
+		padding: 40px 60px 40px 80px;
+		position: relative;
+		box-sizing: border-box;
+	}
+	.print-format,
+	.print-format td,
+	.print-format th {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #333;
+		font-size: 9pt;
+	}
+
+	#header-html table td {
+		padding: 2px 5px !important;
+	}
+	.pay-to {
+		display: inline-block;
+		width: 80%;
+		border-bottom: 1px dotted black;
+	}
+
+	/* General address/contact block styling */
+	.address-block {
+		line-height: 1.6;
+		font-size: 9pt;
+		color: #555;
+	}
+
+	.transaction-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 16px 0px;
+	}
+
+	.transaction-table th,
+	.transaction-table td {
+		padding: 2px 12px !important;
+		border: 1px solid #eee;
+		vertical-align: top !important;
+		font-size: 10pt;
+	}
+
+	.transaction-table thead {
+		background-color: #007883;
+		font-weight: bold;
+	}
+
+	.transaction-table thead th {
+		border-bottom: none;
+		color: #fff;
+	}
+
+	.totals-section {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	/* Thank you message */
+	.thank-you {
+		font-size: 9pt;
+		color: #555;
+	}
+
+	/* Container for the summary fields */
+	.summary {
+		width: 280px;
+	}
+
+	/* Individual summary line styling */
+	.summary td {
+		font-size: 8pt;
+		color: #333;
+		padding: 8px 8px 4px 20px !important;
+	}
+
+	/* Border for summary items */
+	.summary-item {
+		border-bottom: 1px solid #8d8d8d;
+	}
+
+	/* Balance due specific styling */
+	.balance-due td {
+		font-weight: bold;
+		font-size: 12pt;
+		padding: 12px 8px 12px 20px !important;
+		border-top: 1px solid #000;
+	}
+	.balance-due td:first-child {
+		color: #007883;
+	}
+	.balance-due td:last-child {
+		background-color: #e6f3f4;
+		color: #000;
+		border-bottom: 1px solid #000;
+	}
+
+	/* Footer section for terms and bank details */
+	.invoice-footer {
+		margin-top: 50px;
+		border-top: 2px solid #eee;
+		padding-top: 20px;
+		font-size: 8pt;
+		color: #777;
+		line-height: 1.6;
+	}
+
+	.footer-header {
+		color: #007883;
+		font-weight: bold;
+		margin-bottom: 8px;
+	}
+</style>
+<div id="header-html">
+	<table width="100%">
+		<tr>
+			<td>
+				<h2 style="margin-top: 0px">
+					{{doc.get_formatted("print_heading") or "PAYMENT VOUCHER"}}
+				</h2>
+			</td>
+			<td width="20%"><b>{{doc.get_formatted("name")}}</b></td>
+		</tr>
+		<tr>
+			<td>
+				Pay To :
+				<span class="pay-to"> {{doc.get_formatted("party_name")}} </span>
+			</td>
+			<td>Date : {{doc.get_formatted("posting_date")}}</td>
+		</tr>
+	</table>
+</div>
+
+<main>
+	<table class="transaction-table">
+		<thead>
+			<tr>
+				<th style="text-align: center">DESCRIPTION</th>
+				<th width="20%" style="text-align: center">AMOUNT</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for d in doc.references %}
+			<tr>
+				<td>{{d.get_formatted("reference_name")}}</td>
+				<td align="right">{{frappe.utils.fmt_money(d.allocated_amount)}}</td>
+			</tr>
+			{% endfor %} {% for d in range(7 - doc.references | len) %}
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td><b>The Sum of </b>{{doc.get_formatted("base_in_words")}}</td>
+				<td align="right">{{doc.get_formatted("total_allocated_amount")}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table width="100%">
+		<tr>
+			<td colspan="2">
+				<b>Pay Via : </b>
+				{{doc.get_formatted("mode_of_payment")}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Reference No : </b>
+				{{doc.get_formatted("reference_no")}}
+			</td>
+			<td align="right">
+				<b>Reference Date : </b>
+				{{doc.get_formatted("reference_date")}}
+			</td>
+		</tr>
+	</table>
+</main>
+
+<div id="footer-html">
+	<table width="100%" style="margin-top: 2cm">
+		<tr>
+			<td></td>
+			<td align="center" align="right" width="40%">{{doc.get_formatted("received_by")}}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="center" style="border-top: 1px solid black">
+				<b>Received By</b>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<small>This is a system generated document, no signature required.</small>
+			</td>
+		</tr>
+	</table>
+</div>
