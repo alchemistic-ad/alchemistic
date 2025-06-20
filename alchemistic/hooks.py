@@ -116,6 +116,10 @@ fixtures = [
         "filters": [("module", "in", ["Alchemistic Cloud ERP"])],
     },
     {
+        "doctype": "Custom Field",
+        "filters": [("module", "in", ["Alchemistic Cloud ERP"])],
+    },
+    {
         "doctype": "Address Template",
         "filters": [("name", "in", ["Malaysia"])],
     },

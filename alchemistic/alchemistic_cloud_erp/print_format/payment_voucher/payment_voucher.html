@@ -86,7 +86,7 @@
 		<tbody>
 			{% for d in doc.references %}
 			<tr>
-				<td>{{d.get_formatted("reference_name")}}</td>
+				<td>{{d.get_formatted("custom_description")}}</td>
 				<td align="right">{{frappe.utils.fmt_money(d.allocated_amount)}}</td>
 			</tr>
 			{% endfor %} {% for d in range(7 - doc.references | len) %}
