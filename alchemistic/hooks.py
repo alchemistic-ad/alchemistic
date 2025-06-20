@@ -145,6 +145,7 @@ fixtures = [
 
 doc_events = {
     "Payment Entry": {
+        "autoname": "alchemistic.doc_events.payment_entry.autoname",
         "before_print": "alchemistic.doc_events.payment_entry.before_print",
     },
     "Project": {
