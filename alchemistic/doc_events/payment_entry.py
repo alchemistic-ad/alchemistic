@@ -7,7 +7,9 @@ def autoname(doc: PaymentEntry, action):
     posting_date = getdate(doc.posting_date)
     year = str(posting_date.year)[-1]
     month = posting_date.strftime("%m")
-    prefix = "PV"
+    prefix = "OR"
+    if doc.payment_type == "Receive":
+        prefix = "PV"
     doc.naming_series = prefix + year + month + ".#"
 
 
