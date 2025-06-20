@@ -52,68 +52,6 @@
 		border-bottom: none;
 		color: #fff;
 	}
-
-	.totals-section {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		width: 100%;
-	}
-
-	/* Thank you message */
-	.thank-you {
-		font-size: 9pt;
-		color: #555;
-	}
-
-	/* Container for the summary fields */
-	.summary {
-		width: 280px;
-	}
-
-	/* Individual summary line styling */
-	.summary td {
-		font-size: 8pt;
-		color: #333;
-		padding: 8px 8px 4px 20px !important;
-	}
-
-	/* Border for summary items */
-	.summary-item {
-		border-bottom: 1px solid #8d8d8d;
-	}
-
-	/* Balance due specific styling */
-	.balance-due td {
-		font-weight: bold;
-		font-size: 12pt;
-		padding: 12px 8px 12px 20px !important;
-		border-top: 1px solid #000;
-	}
-	.balance-due td:first-child {
-		color: #007883;
-	}
-	.balance-due td:last-child {
-		background-color: #e6f3f4;
-		color: #000;
-		border-bottom: 1px solid #000;
-	}
-
-	/* Footer section for terms and bank details */
-	.invoice-footer {
-		margin-top: 50px;
-		border-top: 2px solid #eee;
-		padding-top: 20px;
-		font-size: 8pt;
-		color: #777;
-		line-height: 1.6;
-	}
-
-	.footer-header {
-		color: #007883;
-		font-weight: bold;
-		margin-bottom: 8px;
-	}
 </style>
 <div id="header-html">
 	<table width="100%">
@@ -123,14 +61,16 @@
 					{{doc.get_formatted("print_heading") or "PAYMENT VOUCHER"}}
 				</h2>
 			</td>
-			<td width="20%"><b>{{doc.get_formatted("name")}}</b></td>
+			<td align="right" width="20%" style="vertical-align: bottom !important">
+				<b>Voucher #{{doc.get_formatted("name")}}</b>
+			</td>
 		</tr>
 		<tr>
 			<td>
 				Pay To :
 				<span class="pay-to"> {{doc.get_formatted("party_name")}} </span>
 			</td>
-			<td>Date : {{doc.get_formatted("posting_date")}}</td>
+			<td align="right">Date : {{doc.get_formatted("posting_date")}}</td>
 		</tr>
 	</table>
 </div>
