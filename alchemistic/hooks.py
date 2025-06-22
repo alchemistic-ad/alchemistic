@@ -148,6 +148,9 @@ fixtures = [
 # Hook on document methods and events
 
 doc_events = {
+    "Journal Entry": {
+        "autoname": "alchemistic.doc_events.journal_entry.autoname",
+    },
     "Payment Entry": {
         "autoname": "alchemistic.doc_events.payment_entry.autoname",
         "before_print": "alchemistic.doc_events.payment_entry.before_print",
