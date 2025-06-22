@@ -80,7 +80,7 @@
 		<thead>
 			<tr>
 				<th style="text-align: center">DESCRIPTION</th>
-				<th width="20%" style="text-align: center">AMOUNT</th>
+				<th width="20%" colspan="2" style="text-align: center">AMOUNT</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -89,6 +89,7 @@
 			{% if d.user_remark %}
 			<tr>
 				<td>{{d.get_formatted("user_remark")}}</td>
+				<td width="8%">{{d.get_formatted("account_currency")}}</td>
 				<td align="right">{{frappe.utils.fmt_money(d.amount)}}</td>
 			</tr>
 			<!-- prettier-ignore -->
@@ -98,11 +99,12 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
+				<td>&nbsp;</td>
 			</tr>
 			{% endfor %}
 			<tr>
 				<td><b>The Sum of </b>{{doc.get_formatted("total_debit_in_words")}}</td>
-				<td align="right">{{doc.get_formatted("total_debit")}}</td>
+				<td colspan="2" align="right">{{doc.get_formatted("total_debit")}}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -126,6 +128,14 @@
 				{% endif %}
 			</td>
 		</tr>
+		{% if doc.user_remark %}
+		<tr>
+			<td colspan="2">
+				<b>Remarks:</b>
+				<p>{{doc.get_formatted("user_remark")}}</p>
+			</td>
+		</tr>
+		{% endif %}
 	</table>
 </main>
 
