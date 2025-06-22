@@ -67,8 +67,8 @@
 		</tr>
 		<tr>
 			<td>
-				Pay To :
-				<span class="pay-to"> {{doc.get_formatted("party_name")}} </span>
+				{{doc.get_formatted("custom_pay_recd_label")}} :
+				<span class="pay-to"> {{doc.get_formatted("pay_to_recd_from")}} </span>
 			</td>
 			<td align="right">Date : {{doc.get_formatted("posting_date")}}</td>
 		</tr>
@@ -84,20 +84,25 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for d in doc.references %}
+			<!-- prettier-ignore -->
+			{% for d in doc.accounts %}
+			{% if d.user_remark %}
 			<tr>
-				<td>{{d.get_formatted("custom_description")}}</td>
-				<td align="right">{{frappe.utils.fmt_money(d.allocated_amount)}}</td>
+				<td>{{d.get_formatted("user_remark")}}</td>
+				<td align="right">{{frappe.utils.fmt_money(d.amount)}}</td>
 			</tr>
-			{% endfor %} {% for d in range(7 - doc.references | len) %}
+			<!-- prettier-ignore -->
+			{% endif %}
+			{% endfor %}
+			{% for d in range(doc.empty_rows) %}
 			<tr>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
 			{% endfor %}
 			<tr>
-				<td><b>The Sum of </b>{{doc.get_formatted("base_in_words")}}</td>
-				<td align="right">{{doc.get_formatted("total_allocated_amount")}}</td>
+				<td><b>The Sum of </b>{{doc.get_formatted("total_debit_in_words")}}</td>
+				<td align="right">{{doc.get_formatted("total_debit")}}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -109,13 +114,16 @@
 			</td>
 			<td align="right">
 				<b>Reference Date : </b>
-				{{doc.get_formatted("reference_date")}}
+				{{doc.get_formatted("cheque_date")}}
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
+				{% if doc.custom_print_reference_number %}
 				<b>Reference No : </b>
-				{{doc.get_formatted("reference_no")}}
+				<!-- prettier-ignore -->
+				{{doc.get_formatted("cheque_no")}}
+				{% endif %}
 			</td>
 		</tr>
 	</table>
