@@ -162,6 +162,9 @@ doc_events = {
     "Sales Invoice": {
         "autoname": "alchemistic.doc_events.sales_invoice.autoname",
     },
+    "Quotation": {
+        "autoname": "alchemistic.doc_events.quotation.autoname",
+    },
 }
 
 # Scheduled Tasks
