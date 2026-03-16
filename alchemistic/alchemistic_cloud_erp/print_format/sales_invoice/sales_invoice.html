@@ -250,7 +250,7 @@
 		<td>
 			<div class="footer-header">Terms & Instructions</div>
 			<p>
-				Please ensure the invoice number <b>#{{doc.name}}</b> is included in the payment
+				Please ensure the invoice number <b>{{doc.name}}</b> is included in the payment
 				reference to help us reconcile the transaction promptly.
 			</p>
 			<p>All Payment shall be made via bank transfer or cheque to the following account.</p>
@@ -260,5 +260,9 @@
 				Account Number: 05700128933
 			</p>
 		</td>
+	</tr>
+	{% if doc.terms %}
+	<tr>
+		<td>{{doc.get_formatted("terms")}}</td>
 	</tr>
 </table>
